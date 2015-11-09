@@ -104,8 +104,10 @@
                             break;
                     }
                     v.bufferAction.splice(0,1);
-                    console.log(v.bufferAction)
+                    //console.log(v.bufferAction)
+
                 }
+                console.log(v);
             }
 
         }
