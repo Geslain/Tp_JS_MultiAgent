@@ -12,6 +12,7 @@
         this.width = 50;
         this.angle = 0;
         this.speed = 0;
+        this.bufferAction= [];
     }
 
     Car.prototype.setCoord = function(x ,y) {

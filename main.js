@@ -51,10 +51,10 @@ $(document).ready(function () {
 
         // restore the context to its untranslated/unrotated state
         ctx.restore();
-        console.log("x : " + x +
+        /*console.log("x : " + x +
             " y :" + y +
             " angle" + angle
-        )
+        )*/
     }
 
 

@@ -9,7 +9,7 @@
         this.width = x;
         this.height = y;
         this.safeDistance = 20;
-        this.changeLaneDistance = 100;
+        this.changeLaneDistance = 120;
     }
 
     Environnement.prototype.collisionWithEnv = function (v) {
@@ -29,7 +29,6 @@
 
             if (i != j && v.x + v.width + this.safeDistance > v_temp.x &&
                 v.x + v.width < v_temp.x + v_temp.width) {
-                collision = 1;
                 return true;
             }
         }
@@ -52,16 +51,30 @@
 
 
     Environnement.prototype.changeLane = function (v) {
-        for (j in this.cars) {
-            v_temp = this.cars[j];
+        if(v.bufferAction.length ==0 ) {
+            for (j in this.cars) {
+                v_temp = this.cars[j];
 
-            if (i != j && v.x + v.width + this.changeLaneDistance > v_temp.x &&
-                v.x + v.width < v_temp.x + v_temp.width) {
-                collision = 1;
-                return true;
+                if (i != j
+                    && v.x + v.width + this.changeLaneDistance > v_temp.x
+                    && v.x + v.width < v_temp.x + v_temp.width
+                    && v.y >= v_temp.y
+                    && v.y <= v_temp.y + v_temp.height) {
+                    v.bufferAction.push("right");
+                    v.bufferAction.push("forward");
+                    v.bufferAction.push("right");
+                    v.bufferAction.push("forward");
+                    v.bufferAction.push("right");
+                    v.bufferAction.push("forward");
+                    v.bufferAction.push("left");
+                    v.bufferAction.push("forward");
+                    v.bufferAction.push("left");
+                    v.bufferAction.push("forward");
+                    v.bufferAction.push("left");
+                    v.bufferAction.push("forward");
+                }
             }
         }
-        return false;
     }
 
 
@@ -70,11 +83,29 @@
             v = this.cars[i];
             if(!this.collision(v))
             {
-                if (this.changeLane(v))
-                {
-                    v.turnRight();
-                }
+                this.changeLane(v)
+                if(v.bufferAction.length ==0 )
                 v.moveForward();
+                else
+                {
+                    switch (v.bufferAction[0])
+                    {
+                        case "right" :
+                            v.turnRight();
+                            break;
+                        case "left" :
+                            v.turnLeft();
+                            break;
+                        case "forward" :
+                            v.moveForward();
+                            break;
+                        case "backward" :
+                            v.moveBackward();
+                            break;
+                    }
+                    v.bufferAction.splice(0,1);
+                    console.log(v.bufferAction)
+                }
             }
 
         }
