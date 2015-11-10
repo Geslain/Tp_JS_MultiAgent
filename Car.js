@@ -11,8 +11,11 @@
         this.height = 20;
         this.width = 50;
         this.angle = 0;
-        this.speed = 0;
+        this.speed = 10;
         this.bufferAction= [];
+
+        //hitbox
+        this.hitbox = new Hitbox(this.width+10 ,  this.height+30)
     }
 
     Car.prototype.setCoord = function(x ,y) {
@@ -30,13 +33,21 @@
 
     Car.prototype.moveForward = function() {
 
-        this.x += 20 *Math.cos(this.angle*Math.PI/180)
-        this.y -= 20 *Math.sin(this.angle*Math.PI/180)
+        this.x += this.speed *Math.cos(this.angle*Math.PI/180)
+        this.y -= this.speed *Math.sin(this.angle*Math.PI/180)
     }
 
     Car.prototype.moveBackward = function() {
-        this.x -= 20 *Math.cos(this.angle)
-        this.y += 20 *Math.sin(this.angle)
+        this.x -= this.speed *Math.cos(this.angle)
+        this.y += this.speed0 *Math.sin(this.angle)
+    }
+
+    Car.prototype.getHitboxX = function() {
+        return (this.x - (this.hitbox.width- this.width)/2);
+    }
+
+    Car.prototype.getHitboxY = function() {
+        return (this.y - (this.hitbox.height- this.height)/2);
     }
 
 

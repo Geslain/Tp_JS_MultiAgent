@@ -16,6 +16,14 @@ $(document).ready(function () {
     drawEnvironnement();
     drawCars(env);
 
+    loop = setInterval(
+        function () {
+            env.nextStep();
+            clearCanvas();
+            drawEnvironnement();
+            drawCars(env);
+        }, 50);
+
 
 
     function clearCanvas() {
@@ -47,6 +55,7 @@ $(document).ready(function () {
         for (i in env.cars) {
             v = env.cars[i];
             drawCar(v);
+            drawCarHitbox(v);
         }
     }
 
@@ -80,24 +89,31 @@ $(document).ready(function () {
         )*/
     }
 
+    function drawCarHitbox(v) {
+        ctx.beginPath();
+        ctx.strokeStyle = "#0000ff";
+        ctx.strokeRect(v.getHitboxX(), v.getHitboxY(), v.hitbox.width, v.hitbox.height);
+    }
+
 
     $(document).keydown(function (event) {
         var key = event.which | event.keyCode;
         var loop;
         if (key == 90) {
-            loop = setInterval(
-                function () {
-                    env.nextStep();
-                    clearCanvas();
-                    drawEnvironnement();
-                    drawCars(env);
-                }, 50);
+
+            //loop = setInterval(
+            //    function () {
+            //        env.nextStep();
+            //        clearCanvas();
+            //        drawEnvironnement();
+            //        drawCars(env);²
+            //    }, 50);
 
         }
         else if (key == 81) {
             env.cars.push(new Car(0, 5));
         } else if (key == 83) {
-            clearInterval(loop);
+            clearInterval(this.loop);
         }
     });
 
@@ -142,6 +158,5 @@ $(document).ready(function () {
      var key = event.which | event.keyCode ;
      delete keys[key] ;
      });*/
-
-
+    window.env = env;
 });
