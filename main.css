@@ -13,6 +13,15 @@ form {
     padding: 20px;
 }
 
+#ipt_voies {
+    text-align: center;
+    width:30px;
+}
+
+#preload {
+    display: none;
+}
+
 
 input[type="range"] {
     position: relative;

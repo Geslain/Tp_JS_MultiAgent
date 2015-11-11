@@ -29,7 +29,7 @@ $(document).ready(function () {
     {
         ctx.beginPath();
         var imageObj = new Image();
-        imageObj.src = "Images/route.jpg"
+        imageObj.src = $('img[name="road"]').attr("src")
         var pattern = ctx.createPattern(imageObj, 'repeat');
 
         ctx.rect(0,0,env.width, nblanes*65 + 20);
