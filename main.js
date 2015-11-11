@@ -2,19 +2,22 @@
  * Created by Gess on 30/10/2015.
  */
 
-$(document).ready(function () {
 
+//------------------------------------
+// Configuration
+var nblanes = 10;
+var env;
+
+//------------------------------------
+
+$(document).ready(function () {
 
     var c = document.getElementById("canvas");
     var ctx = c.getContext("2d");
     var keys = {};
 
-    var env = new Environnement(c.width, c.height);
 
-
-    env.addCar(new Car(0, 5));
-    drawEnvironnement();
-    drawCars(env);
+    initEnv();
 
     function clearCanvas() {
         ctx.clearRect(0, 0, c.width, c.height);
@@ -23,11 +26,11 @@ $(document).ready(function () {
     function drawEnvironnement()
     {
         ctx.beginPath();
-        ctx.rect(0,0,env.width, env.height);
+        ctx.rect(0,0,env.width, nblanes*65 + 20);
         ctx.fillStyle = "grey";
         ctx.fill();
 
-        for(var j = 0 ; j < 10 ; j++)
+        for(var j = 0 ; j < env.nbLanes ; j++)
         {
             for(var i = 0 ; i < 10 ; i++)
             {
@@ -91,19 +94,22 @@ $(document).ready(function () {
         var loop = undefined;
         if (key == 90) {
 
-            //loop = setInterval(
-            //    function () {
+            loop = setInterval(
+                function () {
                     env.nextStep();
                     clearCanvas();
                     drawEnvironnement();
                     drawCars(env);
-           //         stop(loop);
-           //     }, 50);
+                    stop(loop);
+                 }, 50);
 
         }
         else if (key == 81) {
-            lane = Math.floor((Math.random() * 9));
-            env.addCar(new Car(0, 5+lane*65));
+            lane = Math.floor((Math.random() * (env.nbLanes-1)));
+            env.addCar(new Car(0, 5+1*65));
+        }else if (key == 68) {
+            nblanes = 3
+            initEnv();
         }
     });
 
@@ -116,47 +122,19 @@ $(document).ready(function () {
             }
         });
     }
-
-
-    /*$(document).mousedown(function(event) {
-     var key = event.which | event.keyCode ;
-     if(key == 3)
-     clearCanvas();
-     else if(key == 1 )
-     drawCar(voiture[0])
-     }).keydown(function(event){
-
-     var key = event.which | event.keyCode ;
-     keys[key] = true;
-     for(var k in keys){
-     switch(k) {
-     //up
-     case "90" :
-     voiture[0].moveForward();
-     break;
-     //left
-     case "81" :
-     voiture[0].turnLeft();
-     break;
-     //down
-     case "83" :
-     voiture[0].moveBackward();
-     break;
-     //right
-     case "68" :
-     voiture[0].turnRight();
-     break;
-     }
-     }
-
-
-     clearCanvas();
-     drawCar(voiture[0])
-     });
-
-     $(document).keyup(function (event) {
-     var key = event.which | event.keyCode ;
-     delete keys[key] ;
-     });*/
     window.env = env;
+
+
+    $("#changeNbVoies").click(function(){
+        nblanes = $("#ipt_voies").val();
+
+        initEnv();
+    })
+
+    function initEnv(){
+        env = new Environnement(c.width, c.height ,nblanes);
+        clearCanvas();
+        drawEnvironnement();
+        drawCars(env);
+    }
 });

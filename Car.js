@@ -11,8 +11,9 @@
         this.height = 20;
         this.width = 50;
         this.angle = 0;
-        this.speed = 10;
+        this.speed =Math.floor(( Math.random()*20)+ 10);
         this.bufferAction= [];
+        this.tickStop= Math.floor(( Math.random()*100)+ 50);
 
         //hitbox
         this.hitbox = new Hitbox(this.width+10 ,  this.height+30)

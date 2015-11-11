@@ -15,6 +15,7 @@
 
     Toll.prototype.addCarLane = function(y){
         lane = Math.floor(y /65);
+
         this.lanes[lane].nbCar++;
     }
 
@@ -27,19 +28,6 @@
 
     Toll.prototype.getLane = function(y){
         return Math.floor(y /65);
-    }
-
-    Toll.prototype.getBestLane = function(v_lane){
-        var lane =this.lanes[v_lane];
-        for( var i = 0; i < this.nbLanes ; i++){
-            if( this.lanes[v_lane] != this.lanes[i] && this.lanes[i].nbCar < lane.nbCar)
-            {
-                lane = this.lanes[i];
-            }
-        }
-        if(this.lanes[v_lane].nbCar -1 == lane.nbCar)
-            return this.lanes[v_lane].index;
-        return lane.index;
     }
 
     window.Toll = Toll;

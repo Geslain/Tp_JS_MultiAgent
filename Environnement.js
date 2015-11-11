@@ -4,20 +4,24 @@
 
 
 (function (document, window, undefined, $) {
-    var Environnement = function (x, y) {
+    var Environnement = function (x, y , nblanes) {
         this.cars = new Array();
         this.width = x;
         this.height =y;
         this.safeDistance = 20;
         this.changeLaneDistance = 120;
-        this.toll = new Toll(10);
-        this.toll_t = this.toll;
+        this.nbLanes = nblanes;
+        this.toll = new Toll(this.nbLanes );
 
     }
 
     Environnement.prototype.addCar = function(v){
-        this.cars.push(v);
-        this.toll.addCarLane(v.y);
+
+        if(!this.collisionWithCars(v , 0)){
+            this.cars.push(v);
+            this.toll.addCarLane(v.y);
+        }
+
     }
 
     Environnement.prototype.collisionWithEnv = function (v) {
@@ -47,10 +51,22 @@
             var ht = v_temp.hitbox.height;
 
             if (i != j
-                && x + w + distance + s >= xt
+                    // haut gauche
+                &&(( x + w + distance + s >= xt
                 && x + w + s <= xt + wt
                 && y >= yt
-                && y <= yt + ht) {
+                && y <= yt + ht))){
+                console.log("hG")
+                return true;
+            }
+                    // haut droit
+            if (i != j
+                    // haut gauche
+                && (x + distance + s >= xt
+                && x +s  <= xt + wt
+                && y >= yt
+                && y <= yt + ht)) {
+                console.log("hD")
                 return true;
             }
         }
@@ -74,17 +90,14 @@
 
     Environnement.prototype.changeLane = function (v) {
         if (v.bufferAction.length == 0) {
-            console.log(this.toll_t.getLane(v.y))
-            var newLane = this.toll_t.getBestLane(this.toll_t.getLane(v.y));
-            console.log(newLane)
-            this.toll_t.lanes[this.toll_t.getLane(v.y)]--;
-            if(newLane > this.toll_t.getLane(v.y))
+            var newLane = this.getBestLane(v);
+            if(newLane > this.toll.getLane(v.y) )//&& this.canChangeLane(v , v.y+65))
             {
-
                 this.toll.changeCarLane(v.y , v.y+65)
                 v.y+= 65
 
-            } else if (newLane >this.toll_t.getLane(v.y)) {
+            } else if (newLane < this.toll.getLane(v.y) )//&& this.canChangeLane(v , v.y-65))
+            {
                 this.toll.changeCarLane(v.y , v.y-65)
                 v.y-= 65
             } else {
@@ -93,28 +106,17 @@
         }
     }
 
-    Environnement.prototype.canChangeLane = function (v) {
-        v_temp = v;
-        v_temp.x += v_temp.speed;
-        v_temp.y += 65;
-        if (this.collisionWithCars(v_temp ,0))
+    Environnement.prototype.canChangeLane = function(v , y){
+        var v_next = v;
+        v_next.y = y;
+        v_next.x += v_next.speed;
+
+        if(this.collisionWithCars(v_next))
+        {
             return false;
-
-        return true;
-
-    }
-
-    Environnement.prototype.isChangeLaneBetter = function (v) {
-        v_temp = v;
-        v_temp.x += v_temp.speed;
-        v_temp.y += 65;
-        new_lane = this.toll.getLane(v_temp)
-        if (this.collisionWithCars(v_temp ,0))
-            return false;
+        }
         return true;
     }
-
-
 
     Environnement.prototype.nextStep = function () {
         this.toll_t = this.toll;
@@ -122,36 +124,52 @@
             v = this.cars[i];
             if(!this.collision(v))
             {
-
                 this.changeLane(v);
                 v.moveForward();
-                //if(v.bufferAction.length ==0 )
-                //v.moveForward();
-                //else
-                //{
-                //    switch (v.bufferAction[0])
-                //    {
-                //        case "right" :
-                //            v.turnRight();
-                //            break;
-                //        case "left" :
-                //            v.turnLeft();
-                //            break;
-                //        case "forward" :
-                //            v.moveForward();
-                //            break;
-                //        case "backward" :
-                //            v.moveBackward();
-                //            break;
-                //    }
-                //    v.bufferAction.splice(0,1);
-                    //console.log(v.bufferAction)
-
-                //}
-                //console.log(v);
+            } else if(this.collisionWithEnv(v))
+            {
+                if(v.tickStop != 0)
+                v.tickStop --;
+                else
+                this.cars.splice(i,1);
             }
 
         }
+    }
+
+    Environnement.prototype.getForwardCars = function(v) {
+        var temp_cars = [];
+        for( var i = 0 ; i <this.nbLanes ; i++) {
+            temp_cars.push(0);
+        }
+
+        for (var i = 0 ; i < this.cars.length ; i++){
+            if(v != this.cars[i] && v.x <= this.cars[i].x)
+            temp_cars[this.toll.getLane(this.cars[i].y)]++;
+        }
+        return temp_cars;
+    }
+
+    Environnement.prototype.getBestLane = function(v){
+        var toll_t = this.getForwardCars(v);
+        var lane = this.toll.getLane(v.y);
+        var best_lane = lane;
+        var ecart_lane  = this.nbLanes;
+        for( var i = 0; i < this.nbLanes ; i++){
+            if(toll_t[i] <= toll_t[best_lane] )
+            {
+                if(toll_t[i] < toll_t[best_lane] )
+                {
+                    best_lane= i;
+                    ecart_lane = Math.abs(lane - i);
+                } else if(toll_t[i] == toll_t[best_lane] && Math.abs(lane - i)<= ecart_lane) {
+                    best_lane= i;
+                    ecart_lane = Math.abs(lane - i);
+                }
+
+            }
+        }
+        return best_lane;
     }
 
     window.Environnement = Environnement;
