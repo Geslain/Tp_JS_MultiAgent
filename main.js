@@ -7,7 +7,7 @@
 // Configuration
 var nblanes = 10;
 var env;
-var colors = [ "blue" , "red" , "green" , "black" , "gold"];
+var colors = [ "blue" , "red" , "green" , "yellow"];
 
 //------------------------------------
 
@@ -35,8 +35,16 @@ $(document).ready(function () {
         ctx.fillStyle = pattern;
         ctx.fill();
 
+        var imageObj = new Image();
+        imageObj.src = "Images/fence.png";
+
+        for(var j = 0 ; j < env.nbLanes ; j++)
+        {
+            ctx.drawImage(imageObj,env.width -100 , j*65 - 10);
+        }
 
 
+        var j_f ;
         for(var j = 0 ; j < env.nbLanes ; j++)
         {
             for(var i = 0 ; i < 10 ; i++)
@@ -46,8 +54,12 @@ $(document).ready(function () {
                 ctx.fillStyle = "white";
                 ctx.fill();
             }
+            j_f = j;
         }
-
+        j_f++;
+        var imageObj = new Image();
+        imageObj.src = "Images/forest.png";
+        ctx.drawImage(imageObj,0 , j_f*65 - 10);
 
     }
 
@@ -70,16 +82,18 @@ $(document).ready(function () {
 
         ctx.beginPath();
         // move the rotation point to the center of the rect
-        ctx.translate(x + width / 2, y + height / 2);
+        //ctx.translate(x + width / 2, y + height / 2);
         // rotate the rect
-        ctx.rotate(-angle * Math.PI / 180);
+        //ctx.rotate(-angle * Math.PI / 180);
 
         // draw the rect on the transformed context
         // Note: after transforming [0,0] is visually [x,y]
         //       so the rect needs to be offset accordingly when drawn
-        ctx.rect(-width / 2, -height / 2, width, height);
-        ctx.fillStyle = car.color;
-        ctx.fill();
+
+        var imageObj = new Image();
+        imageObj.src = "Images/v_"+car.color+".png"
+
+        ctx.drawImage(imageObj,x,y);
 
         // restore the context to its untranslated/unrotated state
         ctx.restore();
