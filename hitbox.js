@@ -7,6 +7,7 @@
     var Hitbox = function(w, h){
         this.width = w;
         this.height = h;
+
     }
 
     window.Hitbox = Hitbox;
