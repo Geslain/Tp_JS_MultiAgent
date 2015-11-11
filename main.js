@@ -26,9 +26,15 @@ $(document).ready(function () {
     function drawEnvironnement()
     {
         ctx.beginPath();
+        var imageObj = new Image();
+        imageObj.src = "Images/route.jpg"
+        var pattern = ctx.createPattern(imageObj, 'repeat');
+
         ctx.rect(0,0,env.width, nblanes*65 + 20);
-        ctx.fillStyle = "grey";
+        ctx.fillStyle = pattern;
         ctx.fill();
+
+
 
         for(var j = 0 ; j < env.nbLanes ; j++)
         {
