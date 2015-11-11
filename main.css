@@ -1,8 +1,16 @@
 #canvas {
     vertical-align: top;
+    border-radius : 5px;
 }
 form {
     display: inline-block;
+}
+
+#config_panel{
+    float :right;
+    background-color: #EEE;
+    border: 1px solid #DDD;
+    padding: 20px;
 }
 
 
