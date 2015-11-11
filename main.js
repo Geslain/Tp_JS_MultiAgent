@@ -12,19 +12,9 @@ $(document).ready(function () {
     var env = new Environnement(c.width, c.height);
 
 
-    env.cars.push(new Car(0, 5));
+    env.addCar(new Car(0, 5));
     drawEnvironnement();
     drawCars(env);
-
-    loop = setInterval(
-        function () {
-            env.nextStep();
-            clearCanvas();
-            drawEnvironnement();
-            drawCars(env);
-        }, 50);
-
-
 
     function clearCanvas() {
         ctx.clearRect(0, 0, c.width, c.height);
@@ -42,7 +32,7 @@ $(document).ready(function () {
             for(var i = 0 ; i < 10 ; i++)
             {
                 ctx.beginPath();
-                ctx.rect(i*2*env.width/20,(j+1)*35 + 5,env.width/20,2);
+                ctx.rect(i*2*env.width/20,(j)*65 +45,env.width/20,2);
                 ctx.fillStyle = "white";
                 ctx.fill();
             }
@@ -98,24 +88,34 @@ $(document).ready(function () {
 
     $(document).keydown(function (event) {
         var key = event.which | event.keyCode;
-        var loop;
+        var loop = undefined;
         if (key == 90) {
 
             //loop = setInterval(
             //    function () {
-            //        env.nextStep();
-            //        clearCanvas();
-            //        drawEnvironnement();
-            //        drawCars(env);²
-            //    }, 50);
+                    env.nextStep();
+                    clearCanvas();
+                    drawEnvironnement();
+                    drawCars(env);
+           //         stop(loop);
+           //     }, 50);
 
         }
         else if (key == 81) {
-            env.cars.push(new Car(0, 5));
-        } else if (key == 83) {
-            clearInterval(this.loop);
+            lane = Math.floor((Math.random() * 9));
+            env.addCar(new Car(0, 5+lane*65));
         }
     });
+
+    function stop(loop)
+    {
+        $(document).keydown(function (event) {
+            var key = event.which | event.keyCode;
+            if (key == 83) {
+                clearInterval(loop);
+            }
+        });
+    }
 
 
     /*$(document).mousedown(function(event) {
