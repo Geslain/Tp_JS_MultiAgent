@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/TP_IA.iml" filepath="$PROJECT_DIR$/.idea/TP_IA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Tp_JS_MultiAgent.iml" filepath="$PROJECT_DIR$/.idea/Tp_JS_MultiAgent.iml" />
     </modules>
   </component>
 </project>
