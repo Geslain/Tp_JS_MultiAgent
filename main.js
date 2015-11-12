@@ -7,6 +7,7 @@
 // Configuration
 var nblanes = 10;
 var env;
+var colors = [ "blue" , "red" , "green" , "black" , "gold"];
 
 //------------------------------------
 
@@ -48,16 +49,16 @@ $(document).ready(function () {
         for (i in env.cars) {
             v = env.cars[i];
             drawCar(v);
-            drawCarHitbox(v);
+            //drawCarHitbox(v);
         }
     }
 
-    function drawCar(voiture) {
-        x = voiture.x;
-        y = voiture.y;
-        width = voiture.width;
-        height = voiture.height;
-        angle = voiture.angle;
+    function drawCar(car) {
+        x = car.x;
+        y = car.y;
+        width = car.width;
+        height = car.height;
+        angle = car.angle;
         // first save the untranslated/unrotated context
         ctx.save();
 
@@ -71,15 +72,11 @@ $(document).ready(function () {
         // Note: after transforming [0,0] is visually [x,y]
         //       so the rect needs to be offset accordingly when drawn
         ctx.rect(-width / 2, -height / 2, width, height);
-        ctx.fillStyle = "gold";
+        ctx.fillStyle = car.color;
         ctx.fill();
 
         // restore the context to its untranslated/unrotated state
         ctx.restore();
-        /*console.log("x : " + x +
-            " y :" + y +
-            " angle" + angle
-        )*/
     }
 
     function drawCarHitbox(v) {
@@ -105,8 +102,9 @@ $(document).ready(function () {
 
         }
         else if (key == 81) {
-            lane = Math.floor((Math.random() * (env.nbLanes-1)));
-            env.addCar(new Car(0, 5+1*65));
+            var lane = Math.floor((Math.random() * (env.nbLanes-1)));
+            var color = colors[Math.floor((Math.random() * (colors.length)))];
+            env.addCar(new Car(0, 5+lane*65 , color));
         }else if (key == 68) {
             nblanes = 3
             initEnv();
@@ -126,6 +124,7 @@ $(document).ready(function () {
 
 
     $("#changeNbVoies").click(function(){
+        if($("#ipt_voies").val() <= 10)
         nblanes = $("#ipt_voies").val();
 
         initEnv();
@@ -138,3 +137,7 @@ $(document).ready(function () {
         drawCars(env);
     }
 });
+
+var creatCopy = function(object) {
+    return $.extend(true , {} , object);
+}
