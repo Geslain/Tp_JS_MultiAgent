@@ -7,6 +7,7 @@
 // Configuration
 var nblanes = 10;
 var env;
+var tick = 50;
 var colors = [ "blue" , "red" , "green" , "black" , "gold"];
 
 //------------------------------------
@@ -98,7 +99,7 @@ $(document).ready(function () {
                     drawEnvironnement();
                     drawCars(env);
                     stop(loop);
-                 }, 50);
+                 }, tick);
 
         }
         else if (key == 81) {
@@ -113,6 +114,12 @@ $(document).ready(function () {
 
     function stop(loop)
     {
+        $("#stopEnv").click(function(){
+            clearInterval(loop);
+            document.getElementById("restartEnv").disabled = false;
+            document.getElementById("stopEnv").disabled = true;
+
+        })
         $(document).keydown(function (event) {
             var key = event.which | event.keyCode;
             if (key == 83) {
@@ -128,6 +135,64 @@ $(document).ready(function () {
         nblanes = $("#ipt_voies").val();
 
         initEnv();
+    })
+
+    $("#addCars").click(function(){
+        var lane = Math.floor((Math.random() * (env.nbLanes-1)));
+        var color = colors[Math.floor((Math.random() * (colors.length)))];
+        env.addCar(new Car(0, 5+lane*65 , color));
+    })
+
+    $("#initEnv").click(function(){
+
+        initEnv();
+        loop = setInterval(
+            function () {
+                env.nextStep();
+                clearCanvas();
+                drawEnvironnement();
+                drawCars(env);
+                stop(loop);
+            }, tick);
+        document.getElementById("initEnv").disabled = true;
+    })
+
+    $("#restartEnv").click(function(){
+        loop = setInterval(
+            function () {
+                env.nextStep();
+                clearCanvas();
+                drawEnvironnement();
+                drawCars(env);
+                stop(loop);
+            },tick);
+        document.getElementById("restartEnv").disabled = true;
+        document.getElementById("stopEnv").disabled = false;
+    })
+
+    $("#fastEnv").click(function(){
+        tick=tick/2;
+        loop = setInterval(
+            function () {
+                env.nextStep();
+                clearCanvas();
+                drawEnvironnement();
+                drawCars(env);
+                stop(loop);
+            }, tick);
+    })
+
+    $("#slowEnv").click(function(){
+        $("#stopEnv").trigger("click");
+        tick=tick*2;
+        loop = setInterval(
+            function () {
+                env.nextStep();
+                clearCanvas();
+                drawEnvironnement();
+                drawCars(env);
+                stop(loop);
+            },tick );
     })
 
     function initEnv(){
