@@ -5,14 +5,17 @@
 
 (function(document , window , undefined , $)
 {
-    var Car = function(x , y){
+    var Car = function(x , y ,color){
         this.x = x;
         this.y = y;
         this.height = 20;
         this.width = 50;
         this.angle = 0;
-        this.speed = 10;
+        this.speed =Math.floor(( Math.random()*20)+ 10);
         this.bufferAction= [];
+        this.tickStop= Math.floor(( Math.random()*100)+ 50);
+        this.licensePlate = this.generateLicensePlate();
+        this.color = color;
 
         //hitbox
         this.hitbox = new Hitbox(this.width+10 ,  this.height+30)
@@ -48,6 +51,17 @@
 
     Car.prototype.getHitboxY = function() {
         return (this.y - (this.hitbox.height- this.height)/2);
+    }
+
+    Car.prototype.generateLicensePlate = function ()
+    {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        for( var i=0; i < 5; i++ )
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+        return text;
     }
 
 
