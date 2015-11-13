@@ -11,7 +11,7 @@
         this.height = 20;
         this.width = 50;
         this.angle = 0;
-        this.speed =Math.floor(( Math.random()*20)+ 10);
+        this.speed =Math.floor(( Math.random()*30)+ 10);
         this.bufferAction= [];
         this.tickStop= Math.floor(( Math.random()*100)+ 50);
         this.licensePlate = this.generateLicensePlate();
