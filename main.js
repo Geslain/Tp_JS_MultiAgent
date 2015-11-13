@@ -136,8 +136,11 @@ $(document).ready(function () {
     {
         $("#stopEnv").click(function(){
             clearInterval(loop);
-            document.getElementById("restartEnv").disabled = false;
-            document.getElementById("stopEnv").disabled = true;
+            if (document.getElementById("stopEnv").disabled==false){
+                document.getElementById("restartEnv").disabled = false;
+                document.getElementById("stopEnv").disabled = true;
+            }
+
 
         })
         $(document).keydown(function (event) {
@@ -218,6 +221,8 @@ $(document).ready(function () {
                 drawCars(env);
                 stop(loop);
             },tick );
+        document.getElementById("restartEnv").disabled = true;
+        document.getElementById("stopEnv").disabled = false;
     })
 
     function initEnv(){
