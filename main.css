@@ -1,6 +1,29 @@
+
+@font-face {
+    font-family: simulator;
+    src: url(Vendor/bootstrap/fonts/Helvetica-UltraCompressed.otf);
+}
+
+
+
+
+body {
+    height: 100%;
+    background-color: #7294c3;
+}
+
+
 #canvas {
-    vertical-align: top;
+
     border-radius : 5px;
+    margin-left: 100px;
+    margin-top: 100px;
+    border :  1px solid #235eb7;
+    -moz-box-shadow: 0px 0px 12px 0px #656565;
+    -webkit-box-shadow: 0px 0px 12px 0px #656565;
+    -o-box-shadow: 0px 0px 12px 0px #656565;
+    box-shadow: 0px 0px 12px 0px #656565;
+    filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=NaN, Strength=12);
 }
 form {
     display: inline-block;
@@ -11,11 +34,19 @@ form {
     background-color: #EEE;
     border: 1px solid #DDD;
     padding: 20px;
+    border-radius: 10px;
+    margin-right: 100px;
+    margin-top: 100px;
+    -moz-box-shadow: 0px 0px 12px 0px #656565;
+    -webkit-box-shadow: 0px 0px 12px 0px #656565;
+    -o-box-shadow: 0px 0px 12px 0px #656565;
+    box-shadow: 0px 0px 12px 0px #656565;
+    filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=NaN, Strength=12);
 }
 
 #ipt_voies {
     text-align: center;
-    width:30px;
+    width:50px;
 }
 
 #preload {
@@ -23,21 +54,21 @@ form {
 }
 
 
-input[type="range"] {
-    position: relative;
-    margin-left: 1em;
+
+#range {
+    width: 100px;
+    display : inline-block;
 }
-input[type="range"]:after,
-input[type="range"]:before {
-    position: absolute;
-    top: 1em;
-    color: #aaa;
+
+#div_title {
+    margin-top: 200px;
+    float: left;
+    width: 100%;
 }
-input[type="range"]:before {
-    left:0em;
-    content: "flux faible";
-}
-input[type="range"]:after {
-    right: 0em;
-    content: "flux élevé";
+
+ h1{
+    text-align: center;
+    width: 100%;
+    font-family: simulator;
+     font-size: 115px;
 }

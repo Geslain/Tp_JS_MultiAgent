@@ -163,7 +163,7 @@ $(document).ready(function () {
     $("#addCars").click(function(){
         var i=$("#range").val();
         while (i>0){
-            var lane = i%10;//Math.floor((Math.random() * (env.nbLanes-1)));
+            var lane = i%nblanes;//Math.floor((Math.random() * (env.nbLanes-1)));
             var color = colors[Math.floor((Math.random() * (colors.length)))];
             env.addCar(new Car(0, 5+lane*65 , color));
             i--;

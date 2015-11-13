@@ -3,64 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
-    <script src="Vendor/jQuery/jquery.min.js"></script>
-    <script src="Environnement.js"></script>
-    <script src="Car.js"></script>
-    <script src="Hitbox.js"></script>
-    <script src="Toll.js"></script>
-    <script src="Lane.js"></script>
-    <script src="main.js"></script>
-    <link rel="stylesheet" href="Vendor/bootstrap/css/bootstrap.min.css" >
-    <link rel="stylesheet" href="main.css" >
 </head>
-<body>
-    <canvas id="canvas" width="1000" height="800">
-        Carte voiture
-    </canvas>
+<body style="background-color: black; text-align: center">
+<a href="jeu.html" style="margin-top: 200px; position: relative">
 
-    <div name="panneau de contrôle" id="config_panel">
-    <form>
-
-        <!-- Démarrage de la scène -->
-        <button id="initEnv" type="button" class="btn btn-info"><i class="glyphicon glyphicon-off"></i> Démarrer la scène</button>
-        <!-- mettre en pause ou reprendre l'environnement -->
-        <button id="stopEnv" type="button" class="btn btn-info"><i class="glyphicon glyphicon-pause"></i>  Mettre en pause la scène</button>
-        <button id="restartEnv" type="button" disabled="true" class="btn btn-info"><i class="glyphicon glyphicon-play"></i> Reprendre la scène</button><br><br>
-        <!-- changer le nombre de voies -->
-        <button id="changeNbVoies" type="button" class="btn btn-info">Changer nombre voies</button>
-        <input id="ipt_voies" type="number" value="10" max="10" min="0"></br></br>
-        <!-- Ajouter voiture -->
-        <button id="addCars" type="button" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> Ajouter voiture</button>
-        <input type="range" id="range" value="1" max="5" min="1"  ></br></br>
-
-
-
-        <!-- Accélérer ou ralentir la scène -->
-        <button id="fastEnv" type="button" class="btn btn-info"> Accélérer la scène</button>
-        <button id="slowEnv" type="button" class="btn btn-info"> Ralentir la scène</button></br>
-
-
-
-
-
-
-    </form>
-
-    </div>
-
-
-    <div id="preload">
-        <img src="Images/fence.png"    width="1" height="1" name="fence" />
-        <img src="Images/forest.png"   width="1" height="1" name="forest" />
-        <img src="Images/route.jpg"    width="1" height="1" name="road" />
-        <img src="Images/v_blue.png"   width="1" height="1" name="v_blue" />
-        <img src="Images/v_green.png"  width="1" height="1" name="v_green" />
-        <img src="Images/v_red.png"    width="1" height="1" name="v_red" />
-        <img src="Images/v_yellow.png" width="1" height="1" name="v_yellow" />
-    </div>
-
+ <img src="Images/Péage%20SIMULATOR%202015.png">
+</a>
 </body>
 </html>
-
-
-
